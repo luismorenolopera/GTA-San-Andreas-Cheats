@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+    <link href="hacker.css" rel="stylesheet">
+    <style media="screen">
+      .items {
+      	display: flex;
+      	flex-wrap: wrap;
+      }
+      .items .item {
+      	flex: 1 0 25%;
+        box-sizing: border-box;
+        font-size: 4em;
+        margin-right: 0.5em;
+        margin-top: 0.5em;
+      }
+      .message {
+        font-size: 4em;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+      }
+      .item:hover {
+        cursor: pointer;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="Rtable">
+      <ul class="items">
+        <li class="list-group-item item"
+            v-for="cheat in cheats"
+            @click="sendCode(cheat.code)">
+          {{ cheat.message }}
+        </li>
+      </ul>
+
+      <div class="well message" v-if="alert">
+        {{message}}
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+    var example1 = new Vue({
+      el: '#app',
+      data: {
+        cheats: [
+          { message: 'Salud y vida', code: 'hesoyam' },
+          { message: 'Armas 1', code: 'lxgiwyl' },
+          { message: 'Armas 2', code: 'kjkszpj' },
+          { message: 'Armas 3', code: 'uzumymw' },
+          { message: 'coches con nitro', code: 'speedfreak' },
+          { message: 'modo adrenalina', code: 'munasef' },
+          { message: 'quitarte las estrellas', code: 'asnaeb' },
+          { message: 'calles plagadas de bandas', code: 'mroemzh' },
+          { message: 'gente armada', code: 'foooxft' },
+          { message: 'coches explosivos', code: 'cpktnwt' },
+          { message: 'buscado por cazarecompensas', code: 'bagowpg' },
+          { message: 'aumentar 2 estrellas', code: 'osrblhh' },
+          { message: 'municion infinita', code: 'fullclip' }
+        ],
+        alert: false,
+        message: '',
+        host: 'http://192.168.1.68:5000'
+      },
+      methods: {
+        sendCode(code) {
+          axios.get(`${this.host}/${code}`)
+          .then((response) => {
+            this.message = response.data['message']
+            this.alert = true;
+            setTimeout(()=> this.alert=false, 2000);
+          })
+        }
+      }
+    })
+    </script>
+  </body>
+</html>
